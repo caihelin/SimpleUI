@@ -52,10 +52,14 @@ If you enabled the optionMenu, this method is the *"selection listener"*
 Tip: Use `switch(item)` inside.
 
 ```java
-public boolean onOptionsItemSelected(MenuItem item) {}{
+public boolean onOptionsItemSelected(MenuItem item){
     ...
 }
 ```
+
+### Sample activity
+
+There's a sample of how to use the library. You can find it <a href="https://github.com/jlelse/SimpleUI/tree/master/sample">here</a>
 
 ## Advanced features
 
