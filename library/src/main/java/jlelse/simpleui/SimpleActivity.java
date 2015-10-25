@@ -142,7 +142,7 @@ public abstract class SimpleActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if(optionsMenu()){
+        if (optionsMenu()) {
             getMenuInflater().inflate(optionsMenuRes(), menu);
         }
         return true;
