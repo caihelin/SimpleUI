@@ -9,22 +9,13 @@ You just have to configure the main things instead of coding them yourself.
 
 ### Gradle
 
-SimpleUI is available via JitPack.
+SimpleUI is available via jCenter.
 
-Add this in your build.gradle at the end of repositories:
-
-```
- repositories {
-        // ...
-        maven { url "https://jitpack.io" }
-    }
-```
-
-And add the dependency in the form
+Add this to your build.gradle:
 
 ```
  dependencies {
-        compile 'com.github.jlelse:SimpleUI:+'
+        compile 'jlelse:SimpleUI:+'
     }
 ```
 

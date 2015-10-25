@@ -36,6 +36,6 @@ android {
 }
 
 dependencies {
-    compile project(':library') //For development or modifying the library
-    //compile 'com.github.jlelse:SimpleUI:+' //For production
+    //compile project(':library') //For development or modifying the library
+    compile 'jlelse:SimpleUI:+' //For production
 }
