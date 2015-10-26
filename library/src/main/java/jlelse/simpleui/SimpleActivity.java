@@ -116,8 +116,8 @@ public abstract class SimpleActivity extends AppCompatActivity {
         }
 
         //Init Fab
+        floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
         if (fab()) {
-            floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
             if (accentColor() != 0) setFabColor(accentColor());
             if (fabDrawable() != null) setFabDrawable(fabDrawable());
             if (fabOnClickListener() != null) setFabOnClickListener(fabOnClickListener());
