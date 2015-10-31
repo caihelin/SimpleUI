@@ -170,10 +170,6 @@ public abstract class SimpleActivity extends AppCompatActivity {
         floatingActionButton.setOnClickListener(onClickListener);
     }
 
-    public void setDrawerMenu(int menuRes) {
-        new MenuInflater(this).inflate(menuRes, getDrawerMenu());
-    }
-
     public void setDrawerMenuListener(NavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener) {
         navigationView.setNavigationItemSelectedListener(navigationItemSelectedListener);
     }
@@ -181,6 +177,10 @@ public abstract class SimpleActivity extends AppCompatActivity {
     //Enable deeper access to special components
     public Menu getDrawerMenu() {
         return navigationView.getMenu();
+    }
+
+    public void setDrawerMenu(int menuRes) {
+        new MenuInflater(this).inflate(menuRes, getDrawerMenu());
     }
 
     public AppBarLayout getAppBarLayout() {
