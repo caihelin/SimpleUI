@@ -85,17 +85,17 @@ public class SampleActivity extends SimpleActivity {
 
     @Override
     public int primaryColor() {
-        return getResources().getColor(R.color.colorPrimary);
+        return getResources().getColor(R.color.primary);
     }
 
     @Override
     public int primaryColorDark() {
-        return getResources().getColor(R.color.colorPrimaryDark);
+        return getResources().getColor(R.color.primary_dark);
     }
 
     @Override
     public int accentColor() {
-        return getResources().getColor(R.color.colorAccent);
+        return getResources().getColor(R.color.accent);
     }
 
     @Override
