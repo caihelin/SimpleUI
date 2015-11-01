@@ -3,7 +3,6 @@
 ## What is SimpleUI?
 
 SimpleUI is an Android library which helps you creating the activity UI more easier.
-You just have to configure the main things instead of coding them yourself.
 
 ## How to use SimpleUI?
 
