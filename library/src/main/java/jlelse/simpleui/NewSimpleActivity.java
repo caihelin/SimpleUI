@@ -98,7 +98,7 @@ public class NewSimpleActivity extends AppCompatActivity implements View.OnClick
         initFab(isFabEnabled(), getFabDrawable(), getFabColor(), getFabListener());
         initToolbar(isToolbarEnabled(), getToolbarColor());
         initDrawer(isDrawerEnabled(), getDrawerMenuResId(), getDrawerListener(), getDrawerHeaderView());
-        
+
         //Color statusbar
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && colorPrimaryDark != 0) {
             Window window = getWindow();
@@ -232,11 +232,28 @@ public class NewSimpleActivity extends AppCompatActivity implements View.OnClick
             getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
             if (actionBar != null) {
                 actionBar.setDisplayHomeAsUpEnabled(true);
+                actionBar.setHomeButtonEnabled(true);
+                ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, getDrawerLayout(), getToolbar(), R.string.drawer_open, R.string.drawer_close) {
+                    @Override
+                    public void onDrawerOpened(View drawerView) {
+                        super.onDrawerOpened(drawerView);
+                        invalidateOptionsMenu();
+                        syncState();
+                    }
+
+                    @Override
+                    public void onDrawerClosed(View drawerView) {
+                        super.onDrawerClosed(drawerView);
+                        invalidateOptionsMenu();
+                        syncState();
+                    }
+                };
+                getDrawerLayout().setDrawerListener(actionBarDrawerToggle);
+                actionBarDrawerToggle.syncState();
             }
+            getNavigationView().getMenu().clear();
             if (getDrawerMenuResId() != NO_DRAWER_MENU) {
                 getNavigationView().inflateMenu(getDrawerMenuResId());
-            } else {
-                getNavigationView().getMenu().clear();
             }
             if (getDrawerListener() != null) {
                 getNavigationView().setNavigationItemSelectedListener(getDrawerListener());
@@ -255,27 +272,11 @@ public class NewSimpleActivity extends AppCompatActivity implements View.OnClick
             getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
             if (actionBar != null) {
                 actionBar.setDisplayHomeAsUpEnabled(false);
+                actionBar.setHomeButtonEnabled(false);
             }
         }
 
-        // DrawerToggle
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, getDrawerLayout(), getToolbar(), R.string.drawer_open, R.string.drawer_close) {
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                invalidateOptionsMenu();
-                syncState();
-            }
 
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                super.onDrawerClosed(drawerView);
-                invalidateOptionsMenu();
-                syncState();
-            }
-        };
-        getDrawerLayout().setDrawerListener(actionBarDrawerToggle);
-        actionBarDrawerToggle.syncState();
     }
 
     public boolean isDrawerEnabled() {
