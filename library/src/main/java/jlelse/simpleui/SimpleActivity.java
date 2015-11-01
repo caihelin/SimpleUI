@@ -28,166 +28,359 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
-public abstract class SimpleActivity extends AppCompatActivity {
+public class SimpleActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private LinearLayout main;
+    //Fab
+    private boolean fabEnabled = false;
+    private Drawable fabDrawable = null;
+    private int fabColor = DEFAULT_FAB_COLOR;
+    private View.OnClickListener fabListener = null;
     private FloatingActionButton floatingActionButton;
-    private NavigationView navigationView;
+
+    public static int DEFAULT_FAB_COLOR = 111111;
+
+    //Toolbar
+    private boolean toolbarEnabled = false;
+    private int toolbarColor = DEFAULT_TOOLBAR_COLOR;
     private Toolbar toolbar;
     private AppBarLayout appBarLayout;
 
-    public abstract boolean fab();
+    public static int DEFAULT_TOOLBAR_COLOR = 111111;
 
-    public abstract Drawable fabDrawable();
+    //Drawer
+    private boolean drawerEnabled = false;
+    private int drawerMenuResId = NO_DRAWER_MENU;
+    private NavigationView.OnNavigationItemSelectedListener drawerListener;
+    private View drawerHeaderView;
+    private NavigationView navigationView;
+    private DrawerLayout drawerLayout;
 
-    public abstract View.OnClickListener fabOnClickListener();
+    public static int NO_DRAWER_MENU = 111111;
 
-    public abstract boolean drawer();
-
-    public abstract int drawerMenuRes();
-
-    public abstract NavigationView.OnNavigationItemSelectedListener drawerMenuListener();
-
-    public abstract boolean optionsMenu();
-
-    public abstract int optionsMenuRes();
-
-    public abstract boolean toolbar();
-
-    public abstract int primaryColor();
-
-    public abstract int primaryColorDark();
-
-    public abstract int accentColor();
-
-    public abstract void init();
+    //Other
+    private LinearLayout mainLayout;
+    private int colorPrimaryDark;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setTheme(R.style.Theme_SimpleUI);
+        enableDefaultTheme();
 
-        //Init Drawer
-        if (drawer()) {
-            setContentView(R.layout.with_drawer);
-            navigationView = (NavigationView) findViewById(R.id.navigation_view);
-            if (drawerMenuRes() != 0) setDrawerMenu(drawerMenuRes());
-            if (drawerMenuListener() != null) setDrawerMenuListener(drawerMenuListener());
-        } else {
-            setContentView(R.layout.main);
-        }
-
-        //Init Toolbar etc.
-        appBarLayout = (AppBarLayout) findViewById(R.id.appbar_layout);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setPopupTheme(R.style.ThemeOverlay_SimpleUI);
-        setSupportActionBar(toolbar);
-
-        //Finish Drawer Init
-        if (drawer()) {
-            ActionBar actionBar = getSupportActionBar();
-            if (actionBar != null) actionBar.setDisplayHomeAsUpEnabled(true);
-            DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-            ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close) {
-                @Override
-                public void onDrawerOpened(View drawerView) {
-                    super.onDrawerOpened(drawerView);
-                    invalidateOptionsMenu();
-                    syncState();
-                }
-
-                @Override
-                public void onDrawerClosed(View drawerView) {
-                    super.onDrawerClosed(drawerView);
-                    invalidateOptionsMenu();
-                    syncState();
-                }
-            };
-            drawerLayout.setDrawerListener(actionBarDrawerToggle);
-            actionBarDrawerToggle.syncState();
-        }
-
-        //Init Fab
-        floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
-        if (fab()) {
-            if (accentColor() != 0) setFabColor(accentColor());
-            if (fabDrawable() != null) setFabDrawable(fabDrawable());
-            if (fabOnClickListener() != null) setFabOnClickListener(fabOnClickListener());
-        } else {
-            floatingActionButton.setVisibility(View.GONE);
-        }
-
-
-        //Init Toolbar & AppBarLayout
-        if (!toolbar()) toolbar.setVisibility(View.GONE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            if (primaryColorDark() != 0) window.setStatusBarColor(primaryColorDark());
-        }
-        if (primaryColor() != 0) appBarLayout.setBackgroundColor(primaryColor());
-
-        main = (LinearLayout) findViewById(R.id.main);
+        // Important because own methods override it
+        super.setContentView(R.layout.with_drawer);
 
         init();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        if (optionsMenu()) {
-            getMenuInflater().inflate(optionsMenuRes(), menu);
+    public void init() {
+        this.floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
+        this.toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(getToolbar());
+        this.appBarLayout = (AppBarLayout) findViewById(R.id.appbar_layout);
+        this.drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        this.navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        this.mainLayout = (LinearLayout) findViewById(R.id.main);
+        this.mainLayout.removeAllViews();
+
+        //Init all things
+        initFab(isFabEnabled(), getFabDrawable(), getFabColor(), getFabListener());
+        initToolbar(isToolbarEnabled(), getToolbarColor());
+        initDrawer(isDrawerEnabled(), getDrawerMenuResId(), getDrawerListener(), getDrawerHeaderView());
+
+        //Color statusbar
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && colorPrimaryDark != 0) {
+            Window window = getWindow();
+            window.setStatusBarColor(getResources().getColor(android.R.color.transparent));
+            drawerLayout.setStatusBarBackgroundColor(colorPrimaryDark);
         }
-        return true;
     }
 
-    //Manual available customizations
-    public void setContent(View view) {
-        main.removeAllViews();
-        main.addView(view);
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            default:
+                break;
+        }
     }
 
-    public void addView(View view) {
-        main.addView(view);
+    //Fab
+    public void initFab(boolean fabEnabled, Drawable fabDrawable, int fabColor, View.OnClickListener fabListener) {
+        this.fabEnabled = fabEnabled;
+        this.fabDrawable = fabDrawable;
+        this.fabColor = fabColor;
+        this.fabListener = fabListener;
+
+        if (isFabEnabled()) {
+            getFloatingActionButton().setVisibility(View.VISIBLE);
+        } else {
+            getFloatingActionButton().setVisibility(View.GONE);
+        }
+        if (getFabDrawable() != null) {
+            getFloatingActionButton().setImageDrawable(getFabDrawable());
+        }
+        if (getFabColor() != DEFAULT_FAB_COLOR) {
+            getFloatingActionButton().setBackgroundTintList(ColorStateList.valueOf(getFabColor()));
+        }
+        if (getFabListener() != null) {
+            getFloatingActionButton().setOnClickListener(getFabListener());
+        }
     }
 
-    public void setFabColor(int color) {
-        floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(color));
+    public boolean isFabEnabled() {
+        return fabEnabled;
     }
 
-    public void setFabDrawable(Drawable drawable) {
-        floatingActionButton.setImageDrawable(drawable);
+    public Drawable getFabDrawable() {
+        return fabDrawable;
     }
 
-    public void setFabOnClickListener(View.OnClickListener onClickListener) {
-        floatingActionButton.setOnClickListener(onClickListener);
+    public int getFabColor() {
+        return fabColor;
     }
 
-    public void setDrawerMenuListener(NavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener) {
-        navigationView.setNavigationItemSelectedListener(navigationItemSelectedListener);
+    public View.OnClickListener getFabListener() {
+        return fabListener;
     }
 
-    //Enable deeper access to special components
-    public Menu getDrawerMenu() {
-        return navigationView.getMenu();
+    public FloatingActionButton getFloatingActionButton() {
+        return floatingActionButton;
     }
 
-    public void setDrawerMenu(int menuRes) {
-        new MenuInflater(this).inflate(menuRes, getDrawerMenu());
+    public void setFabEnabled(boolean fabEnabled) {
+        this.fabEnabled = fabEnabled;
+        initFab(isFabEnabled(), getFabDrawable(), getFabColor(), getFabListener());
+    }
+
+    public void setFabDrawable(Drawable fabDrawable) {
+        this.fabDrawable = fabDrawable;
+        initFab(isFabEnabled(), getFabDrawable(), getFabColor(), getFabListener());
+    }
+
+    public void setFabColor(int fabColor) {
+        this.fabColor = fabColor;
+        initFab(isFabEnabled(), getFabDrawable(), getFabColor(), getFabListener());
+    }
+
+    public void setFabListener(View.OnClickListener fabListener) {
+        this.fabListener = fabListener;
+        initFab(isFabEnabled(), getFabDrawable(), getFabColor(), getFabListener());
+    }
+
+    //Toolbar
+    public void initToolbar(boolean toolbarEnabled, int toolbarColor) {
+        this.toolbarEnabled = toolbarEnabled;
+        this.toolbarColor = toolbarColor;
+
+        if (isToolbarEnabled()) {
+            getToolbar().setVisibility(View.VISIBLE);
+        } else {
+            getToolbar().setVisibility(View.GONE);
+        }
+        if (getToolbarColor() != DEFAULT_TOOLBAR_COLOR) {
+            getAppBarLayout().setBackgroundColor(getToolbarColor());
+        }
+    }
+
+    public boolean isToolbarEnabled() {
+        return toolbarEnabled;
+    }
+
+    public int getToolbarColor() {
+        return toolbarColor;
+    }
+
+    public Toolbar getToolbar() {
+        return toolbar;
     }
 
     public AppBarLayout getAppBarLayout() {
         return appBarLayout;
     }
 
-    public Toolbar getToolbar() {
-        return toolbar;
+    public void setToolbarEnabled(boolean toolbarEnabled) {
+        this.toolbarEnabled = toolbarEnabled;
+        initToolbar(isToolbarEnabled(), getToolbarColor());
+    }
+
+    public void setToolbarColor(int toolbarColor) {
+        this.toolbarColor = toolbarColor;
+        initToolbar(isToolbarEnabled(), getToolbarColor());
+    }
+
+    //Drawer
+    public void initDrawer(boolean drawerEnabled, int drawerMenuResId, NavigationView.OnNavigationItemSelectedListener drawerListener, View drawerHeaderView) {
+        this.drawerEnabled = drawerEnabled;
+        this.drawerMenuResId = drawerMenuResId;
+        this.drawerListener = drawerListener;
+        this.drawerHeaderView = drawerHeaderView;
+
+        ActionBar actionBar = getSupportActionBar();
+
+        if (isDrawerEnabled()) {
+            getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+            if (actionBar != null) {
+                actionBar.setDisplayHomeAsUpEnabled(true);
+                actionBar.setHomeButtonEnabled(true);
+                ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, getDrawerLayout(), getToolbar(), R.string.drawer_open, R.string.drawer_close) {
+                    @Override
+                    public void onDrawerOpened(View drawerView) {
+                        super.onDrawerOpened(drawerView);
+                        invalidateOptionsMenu();
+                        syncState();
+                    }
+
+                    @Override
+                    public void onDrawerClosed(View drawerView) {
+                        super.onDrawerClosed(drawerView);
+                        invalidateOptionsMenu();
+                        syncState();
+                    }
+                };
+                getDrawerLayout().setDrawerListener(actionBarDrawerToggle);
+                actionBarDrawerToggle.syncState();
+            }
+            getNavigationView().getMenu().clear();
+            if (getDrawerMenuResId() != NO_DRAWER_MENU) {
+                getNavigationView().inflateMenu(getDrawerMenuResId());
+            }
+            if (getDrawerListener() != null) {
+                getNavigationView().setNavigationItemSelectedListener(getDrawerListener());
+            } else {
+                getNavigationView().setNavigationItemSelectedListener(null);
+            }
+            try {
+                getNavigationView().removeHeaderView(getDrawerHeaderView());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            if (getDrawerHeaderView() != null) {
+                getNavigationView().addHeaderView(getDrawerHeaderView());
+            }
+        } else {
+            getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            if (actionBar != null) {
+                actionBar.setDisplayHomeAsUpEnabled(false);
+                actionBar.setHomeButtonEnabled(false);
+            }
+        }
+
+
+    }
+
+    public boolean isDrawerEnabled() {
+        return drawerEnabled;
+    }
+
+    public int getDrawerMenuResId() {
+        return drawerMenuResId;
+    }
+
+    public NavigationView.OnNavigationItemSelectedListener getDrawerListener() {
+        return drawerListener;
+    }
+
+    public View getDrawerHeaderView() {
+        return drawerHeaderView;
+    }
+
+    public NavigationView getNavigationView() {
+        return navigationView;
+    }
+
+    public DrawerLayout getDrawerLayout() {
+        return drawerLayout;
+    }
+
+    public void setDrawerEnabled(boolean drawerEnabled) {
+        this.drawerEnabled = drawerEnabled;
+        initDrawer(isDrawerEnabled(), getDrawerMenuResId(), getDrawerListener(), getDrawerHeaderView());
+    }
+
+    public void setDrawerMenuResId(int drawerMenuResId) {
+        this.drawerMenuResId = drawerMenuResId;
+        initDrawer(isDrawerEnabled(), getDrawerMenuResId(), getDrawerListener(), getDrawerHeaderView());
+    }
+
+    public void setDrawerListener(NavigationView.OnNavigationItemSelectedListener drawerListener) {
+        this.drawerListener = drawerListener;
+        initDrawer(isDrawerEnabled(), getDrawerMenuResId(), getDrawerListener(), getDrawerHeaderView());
+    }
+
+    public void setDrawerHeaderView(View drawerHeaderView) {
+        this.drawerHeaderView = drawerHeaderView;
+        initDrawer(isDrawerEnabled(), getDrawerMenuResId(), getDrawerListener(), getDrawerHeaderView());
+    }
+
+    //Theme
+
+    /**
+     * Enables the default SimpleUI theme
+     */
+    public void enableDefaultTheme() {
+        enableCustomTheme(R.style.Theme_SimpleUI);
+    }
+
+    /**
+     * Enables a custom theme and applies possibility to use own colors etc.
+     * Please use as theme parent the themes provided by this library!
+     *
+     * @param resId ID of style resource
+     */
+    public void enableCustomTheme(int resId) {
+        setTheme(resId);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
+            TypedValue typedValue = new TypedValue();
+            getTheme().resolveAttribute(R.attr.colorPrimaryDark, typedValue, true);
+            colorPrimaryDark = typedValue.data;
+        }
+    }
+
+    // Content
+
+    //own method
+    private void addContent(View view, boolean override) {
+        if (override) {
+            mainLayout.removeAllViews();
+        }
+        mainLayout.addView(view);
+    }
+
+    private void addContent(View view, ViewGroup.LayoutParams layoutParams, boolean override) {
+        if (override) {
+            mainLayout.removeAllViews();
+        }
+        mainLayout.addView(view, layoutParams);
+    }
+
+    @Override
+    public void setContentView(int layoutResID) {
+        View view = getLayoutInflater().inflate(layoutResID, null);
+        addContent(view, true);
+    }
+
+    @Override
+    public void setContentView(View view) {
+        addContent(view, true);
+    }
+
+    @Override
+    public void setContentView(View view, ViewGroup.LayoutParams params) {
+        addContent(view, params, true);
+    }
+
+    @Override
+    public void addContentView(View view, ViewGroup.LayoutParams params) {
+        addContent(view, params, false);
     }
 }

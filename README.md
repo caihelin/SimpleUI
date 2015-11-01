@@ -15,7 +15,7 @@ Add this to your build.gradle:
 
 ```
  dependencies {
-        compile 'jlelse:SimpleUI:+'
+        compile 'jlelse:SimpleUI:0.2'
     }
 ```
 
@@ -23,7 +23,7 @@ That's it!
 
 ### Usage in `Activity`
 
-#### 1. Make your Activity extending `jlelse.simpleui.SimpleActivity`
+Make your Activity extending `jlelse.simpleui.SimpleActivity`
 
 ```java
 import jlelse.simpleui.SimpleActivity;
@@ -31,26 +31,7 @@ import jlelse.simpleui.SimpleActivity;
 public class SampleActivity extends SimpleActivity {
 ```
 
-#### 2. Implement all abstract methods
-
-You can do this by using the *Implement Methods* options from Android Studios context menu.
-
-#### 3. Add following override methods to your class
-
-##### `onOptionsItemSelected(MenuItem item)` (Optional)
-
-If you enabled the optionMenu, this method is the *"selection listener"*
-Tip: Use `switch(item)` inside.
-
-```java
-public boolean onOptionsItemSelected(MenuItem item){
-    ...
-}
-```
-
-### Sample activity
-
-There's a sample of how to use the library. You can find it <a href="https://github.com/jlelse/SimpleUI/tree/master/sample">here</a>
+For more information and a sample of how to use see the SampleActivity. You can find it <a href="https://github.com/jlelse/SimpleUI/blob/master/sample/src/main/java/jlelse/simpleuisample/SampleActivity.java">here</a>
 
 ## Advanced features
 
@@ -61,8 +42,8 @@ There is also a `SimpleDialogs` class with some useful methods to use alert dial
 SimpleUI has the following Gradle dependencies:
 
 ```
-compile 'com.android.support:appcompat-v7:+'
-compile 'com.android.support:design:+'
+compile 'com.android.support:appcompat-v7:23.1.0'
+compile 'com.android.support:design:23.1.0'
 ```
 
 ## Credits

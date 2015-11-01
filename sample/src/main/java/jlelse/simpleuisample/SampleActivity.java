@@ -16,11 +16,11 @@
 
 package jlelse.simpleuisample;
 
-import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.TextView;
 
 import jlelse.simpleui.SimpleActivity;
 import jlelse.simpleui.SimpleDialog;
@@ -28,85 +28,61 @@ import jlelse.simpleui.SimpleDialog;
 public class SampleActivity extends SimpleActivity {
 
     @Override
-    public boolean fab() {
-        return true;
-    }
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-    @Override
-    public Drawable fabDrawable() {
-        return getResources().getDrawable(R.mipmap.ic_launcher);
-    }
+        // OPTIONAL
+        enableCustomTheme(R.style.Theme1);
 
-    @Override
-    public View.OnClickListener fabOnClickListener() {
-        return new View.OnClickListener() {
+        // FAB
+        // This way ...
+        setFabColor(getResources().getColor(R.color.accent));
+        setFabDrawable(getResources().getDrawable(R.mipmap.ic_launcher));
+        setFabListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new SimpleDialog(SampleActivity.this).SimpleOKDialog("Hi!", "Lol...");
+                setDrawerEnabled(!isDrawerEnabled());
             }
-        };
-    }
+        });
+        setFabEnabled(true);
+        // ... or this
+        initFab(true, getResources().getDrawable(R.mipmap.ic_launcher), getResources().getColor(R.color.accent), new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setDrawerEnabled(!isDrawerEnabled());
+            }
+        });
 
-    @Override
-    public boolean drawer() {
-        return false;
-    }
+        // Toolbar
+        // This way ...
+        setToolbarColor(getResources().getColor(R.color.primary));
+        setToolbarEnabled(true);
+        // ... or this
+        initToolbar(true, getResources().getColor(R.color.primary));
 
-    @Override
-    public int drawerMenuRes() {
-        return R.menu.drawer;
-    }
-
-    @Override
-    public NavigationView.OnNavigationItemSelectedListener drawerMenuListener() {
-        return new NavigationView.OnNavigationItemSelectedListener() {
+        // Drawer
+        // This way ...
+        setDrawerMenuResId(R.menu.drawer);
+        setDrawerListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
-                new SimpleDialog(SampleActivity.this).SimpleAlertDialog("Item", String.valueOf(item.getTitle()));
+                new SimpleDialog(SampleActivity.this).SimpleOKDialog("Test", "Hey!");
+                getDrawerLayout().closeDrawers();
                 return true;
             }
-        };
-    }
-
-    @Override
-    public boolean optionsMenu() {
-        return true;
-    }
-
-    @Override
-    public int optionsMenuRes() {
-        return R.menu.drawer;
-    }
-
-    @Override
-    public boolean toolbar() {
-        return true;
-    }
-
-    @Override
-    public int primaryColor() {
-        return getResources().getColor(R.color.primary);
-    }
-
-    @Override
-    public int primaryColorDark() {
-        return getResources().getColor(R.color.primary_dark);
-    }
-
-    @Override
-    public int accentColor() {
-        return getResources().getColor(R.color.accent);
-    }
-
-    @Override
-    public void init() {
-        Button button = new Button(this);
-        button.setText("Click me");
-        addView(button);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
+        });
+        TextView headerView = new TextView(this);
+        headerView.setText("Hi!");
+        setDrawerHeaderView(headerView);
+        setDrawerEnabled(true);
+        // ... or this
+        initDrawer(true, R.menu.drawer, new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                new SimpleDialog(SampleActivity.this).SimpleOKDialog("Test", "Hey!");
+                getDrawerLayout().closeDrawers();
+                return true;
+            }
+        }, headerView);
     }
 }
