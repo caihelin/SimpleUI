@@ -72,7 +72,7 @@ public class SimpleActivity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        enableDefaultTheme();
+        //enableDefaultTheme();
 
         // Important because own methods override it
         super.setContentView(R.layout.with_drawer);
