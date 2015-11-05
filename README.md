@@ -30,6 +30,8 @@ import jlelse.simpleui.SimpleActivity;
 public class SampleActivity extends SimpleActivity {
 ```
 
+You either have to use `enableDefaultTheme()` or `enableCustomTheme(R.style.YourTheme)`. If you are using the second method you have to make sure that `R.style.YourTheme` has the parent `Theme.SimpleUI`.
+
 For more information and a sample of how to use see the SampleActivity. You can find it <a href="https://github.com/jlelse/SimpleUI/blob/master/sample/src/main/java/jlelse/simpleuisample/SampleActivity.java">here</a>
 
 ## Advanced features
