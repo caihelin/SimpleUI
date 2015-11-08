@@ -14,7 +14,7 @@ Add this to your build.gradle:
 
 ```
  dependencies {
-        compile 'jlelse:SimpleUI:0.2'
+        compile 'jlelse:SimpleUI:0.3'
     }
 ```
 
@@ -30,7 +30,7 @@ import jlelse.simpleui.SimpleActivity;
 public class SampleActivity extends SimpleActivity {
 ```
 
-You either have to use `enableDefaultTheme()` or `enableCustomTheme(R.style.YourTheme)`. If you are using the second method you have to make sure that `R.style.YourTheme` has the parent `Theme.SimpleUI`.
+Please  use `Theme.SimpleUI` as your style / theme parent.
 
 For more information and a sample of how to use see the SampleActivity. You can find it <a href="https://github.com/jlelse/SimpleUI/blob/master/sample/src/main/java/jlelse/simpleuisample/SampleActivity.java">here</a>
 

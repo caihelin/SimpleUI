@@ -31,9 +31,6 @@ public class SampleActivity extends SimpleActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // OPTIONAL
-        enableCustomTheme(R.style.Theme1);
-
         // FAB
         // This way ...
         setFabColor(getResources().getColor(R.color.accent));
@@ -59,6 +56,10 @@ public class SampleActivity extends SimpleActivity {
         setToolbarEnabled(true);
         // ... or this
         initToolbar(true, getResources().getColor(R.color.primary));
+
+        //Tabs
+        setTabsEnabled(true);
+        // use getTabLayout() to customize your tabs
 
         // Drawer
         // This way ...

@@ -18,42 +18,38 @@ package jlelse.simpleui;
 
 import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 public class SimpleActivity extends AppCompatActivity implements View.OnClickListener {
 
+    public static int DEFAULT_FAB_COLOR = 111111;
+    public static int DEFAULT_TOOLBAR_COLOR = 111111;
+    public static int NO_DRAWER_MENU = 111111;
     //Fab
     private boolean fabEnabled = false;
     private Drawable fabDrawable = null;
     private int fabColor = DEFAULT_FAB_COLOR;
     private View.OnClickListener fabListener = null;
     private FloatingActionButton floatingActionButton;
-
-    public static int DEFAULT_FAB_COLOR = 111111;
-
     //Toolbar
     private boolean toolbarEnabled = false;
     private int toolbarColor = DEFAULT_TOOLBAR_COLOR;
     private Toolbar toolbar;
     private AppBarLayout appBarLayout;
-
-    public static int DEFAULT_TOOLBAR_COLOR = 111111;
-
+    private boolean tabsEnabled = false;
+    private TabLayout tabLayout;
     //Drawer
     private boolean drawerEnabled = false;
     private int drawerMenuResId = NO_DRAWER_MENU;
@@ -61,18 +57,12 @@ public class SimpleActivity extends AppCompatActivity implements View.OnClickLis
     private View drawerHeaderView;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
-
-    public static int NO_DRAWER_MENU = 111111;
-
     //Other
     private LinearLayout mainLayout;
-    private int colorPrimaryDark;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //enableDefaultTheme();
 
         // Important because own methods override it
         super.setContentView(R.layout.with_drawer);
@@ -83,8 +73,13 @@ public class SimpleActivity extends AppCompatActivity implements View.OnClickLis
     public void init() {
         this.floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
         this.toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(getToolbar());
+        try {
+            setSupportActionBar(getToolbar());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         this.appBarLayout = (AppBarLayout) findViewById(R.id.appbar_layout);
+        this.tabLayout = (TabLayout) findViewById(R.id.tabs);
         this.drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         this.navigationView = (NavigationView) findViewById(R.id.navigation_view);
         this.mainLayout = (LinearLayout) findViewById(R.id.main);
@@ -94,13 +89,6 @@ public class SimpleActivity extends AppCompatActivity implements View.OnClickLis
         initFab(isFabEnabled(), getFabDrawable(), getFabColor(), getFabListener());
         initToolbar(isToolbarEnabled(), getToolbarColor());
         initDrawer(isDrawerEnabled(), getDrawerMenuResId(), getDrawerListener(), getDrawerHeaderView());
-
-        //Color statusbar
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && colorPrimaryDark != 0) {
-            Window window = getWindow();
-            window.setStatusBarColor(getResources().getColor(android.R.color.transparent));
-            drawerLayout.setStatusBarBackgroundColor(colorPrimaryDark);
-        }
     }
 
     @Override
@@ -138,25 +126,13 @@ public class SimpleActivity extends AppCompatActivity implements View.OnClickLis
         return fabEnabled;
     }
 
-    public Drawable getFabDrawable() {
-        return fabDrawable;
-    }
-
-    public int getFabColor() {
-        return fabColor;
-    }
-
-    public View.OnClickListener getFabListener() {
-        return fabListener;
-    }
-
-    public FloatingActionButton getFloatingActionButton() {
-        return floatingActionButton;
-    }
-
     public void setFabEnabled(boolean fabEnabled) {
         this.fabEnabled = fabEnabled;
         initFab(isFabEnabled(), getFabDrawable(), getFabColor(), getFabListener());
+    }
+
+    public Drawable getFabDrawable() {
+        return fabDrawable;
     }
 
     public void setFabDrawable(Drawable fabDrawable) {
@@ -164,14 +140,26 @@ public class SimpleActivity extends AppCompatActivity implements View.OnClickLis
         initFab(isFabEnabled(), getFabDrawable(), getFabColor(), getFabListener());
     }
 
+    public int getFabColor() {
+        return fabColor;
+    }
+
     public void setFabColor(int fabColor) {
         this.fabColor = fabColor;
         initFab(isFabEnabled(), getFabDrawable(), getFabColor(), getFabListener());
     }
 
+    public View.OnClickListener getFabListener() {
+        return fabListener;
+    }
+
     public void setFabListener(View.OnClickListener fabListener) {
         this.fabListener = fabListener;
         initFab(isFabEnabled(), getFabDrawable(), getFabColor(), getFabListener());
+    }
+
+    public FloatingActionButton getFloatingActionButton() {
+        return floatingActionButton;
     }
 
     //Toolbar
@@ -193,8 +181,18 @@ public class SimpleActivity extends AppCompatActivity implements View.OnClickLis
         return toolbarEnabled;
     }
 
+    public void setToolbarEnabled(boolean toolbarEnabled) {
+        this.toolbarEnabled = toolbarEnabled;
+        initToolbar(isToolbarEnabled(), getToolbarColor());
+    }
+
     public int getToolbarColor() {
         return toolbarColor;
+    }
+
+    public void setToolbarColor(int toolbarColor) {
+        this.toolbarColor = toolbarColor;
+        initToolbar(isToolbarEnabled(), getToolbarColor());
     }
 
     public Toolbar getToolbar() {
@@ -205,14 +203,22 @@ public class SimpleActivity extends AppCompatActivity implements View.OnClickLis
         return appBarLayout;
     }
 
-    public void setToolbarEnabled(boolean toolbarEnabled) {
-        this.toolbarEnabled = toolbarEnabled;
-        initToolbar(isToolbarEnabled(), getToolbarColor());
+    public boolean isTabsEnabled() {
+        return tabsEnabled;
     }
 
-    public void setToolbarColor(int toolbarColor) {
-        this.toolbarColor = toolbarColor;
-        initToolbar(isToolbarEnabled(), getToolbarColor());
+    public void setTabsEnabled(boolean tabsEnabled) {
+        this.tabsEnabled = tabsEnabled;
+
+        if (isTabsEnabled()) {
+            getTabLayout().setVisibility(View.VISIBLE);
+        } else {
+            getTabLayout().setVisibility(View.GONE);
+        }
+    }
+
+    public TabLayout getTabLayout() {
+        return tabLayout;
     }
 
     //Drawer
@@ -279,16 +285,36 @@ public class SimpleActivity extends AppCompatActivity implements View.OnClickLis
         return drawerEnabled;
     }
 
+    public void setDrawerEnabled(boolean drawerEnabled) {
+        this.drawerEnabled = drawerEnabled;
+        initDrawer(isDrawerEnabled(), getDrawerMenuResId(), getDrawerListener(), getDrawerHeaderView());
+    }
+
     public int getDrawerMenuResId() {
         return drawerMenuResId;
+    }
+
+    public void setDrawerMenuResId(int drawerMenuResId) {
+        this.drawerMenuResId = drawerMenuResId;
+        initDrawer(isDrawerEnabled(), getDrawerMenuResId(), getDrawerListener(), getDrawerHeaderView());
     }
 
     public NavigationView.OnNavigationItemSelectedListener getDrawerListener() {
         return drawerListener;
     }
 
+    public void setDrawerListener(NavigationView.OnNavigationItemSelectedListener drawerListener) {
+        this.drawerListener = drawerListener;
+        initDrawer(isDrawerEnabled(), getDrawerMenuResId(), getDrawerListener(), getDrawerHeaderView());
+    }
+
     public View getDrawerHeaderView() {
         return drawerHeaderView;
+    }
+
+    public void setDrawerHeaderView(View drawerHeaderView) {
+        this.drawerHeaderView = drawerHeaderView;
+        initDrawer(isDrawerEnabled(), getDrawerMenuResId(), getDrawerListener(), getDrawerHeaderView());
     }
 
     public NavigationView getNavigationView() {
@@ -297,53 +323,6 @@ public class SimpleActivity extends AppCompatActivity implements View.OnClickLis
 
     public DrawerLayout getDrawerLayout() {
         return drawerLayout;
-    }
-
-    public void setDrawerEnabled(boolean drawerEnabled) {
-        this.drawerEnabled = drawerEnabled;
-        initDrawer(isDrawerEnabled(), getDrawerMenuResId(), getDrawerListener(), getDrawerHeaderView());
-    }
-
-    public void setDrawerMenuResId(int drawerMenuResId) {
-        this.drawerMenuResId = drawerMenuResId;
-        initDrawer(isDrawerEnabled(), getDrawerMenuResId(), getDrawerListener(), getDrawerHeaderView());
-    }
-
-    public void setDrawerListener(NavigationView.OnNavigationItemSelectedListener drawerListener) {
-        this.drawerListener = drawerListener;
-        initDrawer(isDrawerEnabled(), getDrawerMenuResId(), getDrawerListener(), getDrawerHeaderView());
-    }
-
-    public void setDrawerHeaderView(View drawerHeaderView) {
-        this.drawerHeaderView = drawerHeaderView;
-        initDrawer(isDrawerEnabled(), getDrawerMenuResId(), getDrawerListener(), getDrawerHeaderView());
-    }
-
-    //Theme
-
-    /**
-     * Enables the default SimpleUI theme
-     */
-    public void enableDefaultTheme() {
-        enableCustomTheme(R.style.Theme_SimpleUI);
-    }
-
-    /**
-     * Enables a custom theme and applies possibility to use own colors etc.
-     * Please use as theme parent the themes provided by this library!
-     *
-     * @param resId ID of style resource
-     */
-    public void enableCustomTheme(int resId) {
-        setTheme(resId);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-
-            TypedValue typedValue = new TypedValue();
-            getTheme().resolveAttribute(R.attr.colorPrimaryDark, typedValue, true);
-            colorPrimaryDark = typedValue.data;
-        }
     }
 
     // Content
