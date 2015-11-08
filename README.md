@@ -14,7 +14,7 @@ Add this to your build.gradle:
 
 ```
  dependencies {
-        compile 'jlelse:SimpleUI:0.3'
+        compile 'jlelse:SimpleUI:0.3.1'
     }
 ```
 
