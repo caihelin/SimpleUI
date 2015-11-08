@@ -19,7 +19,7 @@ apply plugin: 'com.android.library'
 ext {
     PUBLISH_GROUP_ID = 'jlelse'
     PUBLISH_ARTIFACT_ID = 'SimpleUI'
-    PUBLISH_VERSION = '0.3'
+    PUBLISH_VERSION = '0.3.1'
 }
 
 android {
@@ -29,8 +29,8 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 5
-        versionName "0.3"
+        versionCode 6
+        versionName "0.3.1"
     }
     buildTypes {
         release {
