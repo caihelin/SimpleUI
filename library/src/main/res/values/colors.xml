@@ -16,9 +16,8 @@
 
 <resources>
 
-    <color name="default_primary">@color/primary_material_light</color>
-    <color name="default_primary_dark">@color/primary_dark_material_light</color>
-    <color name="default_accent">@color/accent_material_light</color>
-    <color name="default_toolbar">@color/primary_material_dark</color>
+    <color name="SimpleColorPrimary">#3F51B5</color>
+    <color name="SimpleColorPrimaryDark">#303F9F</color>
+    <color name="SimpleColorAccent">#FF4081</color>
 
 </resources>

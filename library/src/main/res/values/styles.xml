@@ -16,8 +16,19 @@
 
 <resources>
 
-    <style name="Theme.SimpleUI" parent="Theme.AppCompat.Light.NoActionBar" />
+    <style name="SimpleTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/SimpleColorPrimary</item>
+        <item name="colorPrimaryDark">@color/SimpleColorPrimaryDark</item>
+        <item name="colorAccent">@color/SimpleColorAccent</item>
+    </style>
 
-    <style name="ThemeOverlay.SimpleUI" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="SimpleTheme.Default">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="SimpleTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="SimpleTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

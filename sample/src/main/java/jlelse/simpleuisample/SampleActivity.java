@@ -18,6 +18,7 @@ package jlelse.simpleuisample;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.content.ContextCompat;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -33,8 +34,8 @@ public class SampleActivity extends SimpleActivity {
 
         // FAB
         // This way ...
-        setFabColor(getResources().getColor(R.color.accent));
-        setFabDrawable(getResources().getDrawable(R.mipmap.ic_launcher));
+        setFabColor(ContextCompat.getColor(this, R.color.SimpleColorAccent));
+        setFabDrawable(ContextCompat.getDrawable(this, R.mipmap.ic_launcher));
         setFabListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -43,7 +44,7 @@ public class SampleActivity extends SimpleActivity {
         });
         setFabEnabled(true);
         // ... or this
-        initFab(true, getResources().getDrawable(R.mipmap.ic_launcher), getResources().getColor(R.color.accent), new View.OnClickListener() {
+        initFab(true, ContextCompat.getDrawable(this, R.mipmap.ic_launcher), ContextCompat.getColor(this, R.color.SimpleColorAccent), new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setDrawerEnabled(!isDrawerEnabled());
@@ -52,14 +53,10 @@ public class SampleActivity extends SimpleActivity {
 
         // Toolbar
         // This way ...
-        setToolbarColor(getResources().getColor(R.color.primary));
+        setToolbarColor(ContextCompat.getColor(this, R.color.SimpleColorPrimary));
         setToolbarEnabled(true);
         // ... or this
-        initToolbar(true, getResources().getColor(R.color.primary));
-
-        //Tabs
-        setTabsEnabled(true);
-        // use getTabLayout() to customize your tabs
+        initToolbar(true, ContextCompat.getColor(this, R.color.SimpleColorPrimary));
 
         // Drawer
         // This way ...

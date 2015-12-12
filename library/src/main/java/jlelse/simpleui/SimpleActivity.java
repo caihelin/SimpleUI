@@ -22,7 +22,7 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -30,7 +30,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 public class SimpleActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -48,8 +48,6 @@ public class SimpleActivity extends AppCompatActivity implements View.OnClickLis
     private int toolbarColor = DEFAULT_TOOLBAR_COLOR;
     private Toolbar toolbar;
     private AppBarLayout appBarLayout;
-    private boolean tabsEnabled = false;
-    private TabLayout tabLayout;
     //Drawer
     private boolean drawerEnabled = false;
     private int drawerMenuResId = NO_DRAWER_MENU;
@@ -58,14 +56,14 @@ public class SimpleActivity extends AppCompatActivity implements View.OnClickLis
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
     //Other
-    private LinearLayout mainLayout;
+    private RelativeLayout mainLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // Important because own methods override it
-        super.setContentView(R.layout.with_drawer);
+        super.setContentView(R.layout.main);
 
         init();
     }
@@ -78,11 +76,10 @@ public class SimpleActivity extends AppCompatActivity implements View.OnClickLis
         } catch (Exception e) {
             e.printStackTrace();
         }
-        this.appBarLayout = (AppBarLayout) findViewById(R.id.appbar_layout);
-        this.tabLayout = (TabLayout) findViewById(R.id.tabs);
+        this.appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
         this.drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         this.navigationView = (NavigationView) findViewById(R.id.navigation_view);
-        this.mainLayout = (LinearLayout) findViewById(R.id.main);
+        this.mainLayout = (RelativeLayout) findViewById(R.id.main);
         this.mainLayout.removeAllViews();
 
         //Init all things
@@ -201,24 +198,6 @@ public class SimpleActivity extends AppCompatActivity implements View.OnClickLis
 
     public AppBarLayout getAppBarLayout() {
         return appBarLayout;
-    }
-
-    public boolean isTabsEnabled() {
-        return tabsEnabled;
-    }
-
-    public void setTabsEnabled(boolean tabsEnabled) {
-        this.tabsEnabled = tabsEnabled;
-
-        if (isTabsEnabled()) {
-            getTabLayout().setVisibility(View.VISIBLE);
-        } else {
-            getTabLayout().setVisibility(View.GONE);
-        }
-    }
-
-    public TabLayout getTabLayout() {
-        return tabLayout;
     }
 
     //Drawer
@@ -361,5 +340,14 @@ public class SimpleActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void addContentView(View view, ViewGroup.LayoutParams params) {
         addContent(view, params, false);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (isDrawerEnabled() && getDrawerLayout().isDrawerOpen(GravityCompat.START)) {
+            getDrawerLayout().closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 }
