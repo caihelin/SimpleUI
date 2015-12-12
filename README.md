@@ -1,5 +1,7 @@
 # SimpleUI
 
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-SimpleUI-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/2677)
+
 ## What is SimpleUI?
 
 SimpleUI is an Android library which helps you creating the activity UI more easier.
