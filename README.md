@@ -8,15 +8,29 @@ SimpleUI is an Android library which helps you creating the activity UI more eas
 
 ### Gradle
 
-SimpleUI is available via jCenter.
+SimpleUI is available via JitPack.
 
-Add this to your build.gradle:
+Add this to your root `build.gradle`:
+
+```
+ allprojects {
+    repositories {
+        ...
+        maven { url "https://jitpack.io" }
+    }
+ }
+```
+
+and this to your module `build.gradle`:
 
 ```
  dependencies {
-        compile 'jlelse:SimpleUI:0.3.1'
+        ...
+        compile 'jlelse:SimpleUI:x.y.z'
     }
 ```
+
+Here you have to replace `x.y.z` with the latest release number.
 
 That's it!
 
