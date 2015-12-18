@@ -166,6 +166,12 @@ public class SimpleActivity extends AppCompatActivity implements View.OnClickLis
 
         if (isToolbarEnabled()) {
             getToolbar().setVisibility(View.VISIBLE);
+            if (!isTaskRoot()) {
+                ActionBar actionBar = getSupportActionBar();
+                if (actionBar != null) {
+                    actionBar.setDisplayHomeAsUpEnabled(true);
+                }
+            }
         } else {
             getToolbar().setVisibility(View.GONE);
         }
