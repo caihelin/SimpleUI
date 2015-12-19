@@ -19,8 +19,12 @@ package jlelse.simpleuisample;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.NestedScrollView;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import jlelse.simpleui.SimpleActivity;
@@ -82,5 +86,16 @@ public class SampleActivity extends SimpleActivity {
                 return true;
             }
         }, headerView);
+
+        NestedScrollView contentSV = new NestedScrollView(this);
+        LinearLayout content = new LinearLayout(this);
+        content.setOrientation(LinearLayout.VERTICAL);
+        contentSV.addView(content);
+        setContentView(contentSV, new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        for (int i = 0; i < 100; i++) {
+            TextView sampleTV = new TextView(this);
+            sampleTV.setText(R.string.app_name);
+            content.addView(sampleTV);
+        }
     }
 }
