@@ -28,11 +28,9 @@ and this to your module `build.gradle`:
 ```
  dependencies {
         ...
-        compile 'jlelse:SimpleUI:x.y.z'
+        compile 'com.github.jlelse:SimpleUI:0.5'
     }
 ```
-
-Here you have to replace `x.y.z` with the latest release number.
 
 That's it!
 
