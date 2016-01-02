@@ -16,7 +16,6 @@
 
 package jlelse.simpleui;
 
-import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -26,26 +25,28 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
-public class SimpleActivity extends AppCompatActivity implements View.OnClickListener {
+import com.afollestad.appthemeengine.ATE;
+import com.afollestad.appthemeengine.ATEActivity;
+import com.afollestad.appthemeengine.Config;
 
-    public static int DEFAULT_FAB_COLOR = 111111;
-    public static int DEFAULT_TOOLBAR_COLOR = 111111;
+public class SimpleActivity extends ATEActivity implements View.OnClickListener {
+
+    public static String default_theme_key = "default";
+
     public static int NO_DRAWER_MENU = 111111;
     //Fab
     private boolean fabEnabled = false;
     private Drawable fabDrawable = null;
-    private int fabColor = DEFAULT_FAB_COLOR;
     private View.OnClickListener fabListener = null;
     private FloatingActionButton floatingActionButton;
     //Toolbar
     private boolean toolbarEnabled = false;
-    private int toolbarColor = DEFAULT_TOOLBAR_COLOR;
     private Toolbar toolbar;
     private AppBarLayout appBarLayout;
     //Drawer
@@ -55,11 +56,29 @@ public class SimpleActivity extends AppCompatActivity implements View.OnClickLis
     private View drawerHeaderView;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
+    //Theming
+    private String themeKey;
     //Other
     private RelativeLayout mainLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (!getThemeConfig().isConfigured()) {
+            int primaryColor, accentColor;
+            TypedValue typedValue = new TypedValue();
+            getTheme().resolveAttribute(R.attr.colorPrimary, typedValue, true);
+            primaryColor = typedValue.data;
+            typedValue = new TypedValue();
+            getTheme().resolveAttribute(R.attr.colorAccent, typedValue, true);
+            accentColor = typedValue.data;
+            ATE.config(this, getThemeKey())
+                    .primaryColor(primaryColor)
+                    .autoGeneratePrimaryDark(true)
+                    .accentColor(accentColor)
+                    .usingMaterialDialogs(true)
+                    .commit();
+        }
+
         super.onCreate(savedInstanceState);
 
         // Important because own methods override it
@@ -83,8 +102,8 @@ public class SimpleActivity extends AppCompatActivity implements View.OnClickLis
         this.mainLayout.removeAllViews();
 
         //Init all things
-        initFab(isFabEnabled(), getFabDrawable(), getFabColor(), getFabListener());
-        initToolbar(isToolbarEnabled(), getToolbarColor());
+        initFab(isFabEnabled(), getFabDrawable(), getFabListener());
+        initToolbar(isToolbarEnabled());
         initDrawer(isDrawerEnabled(), getDrawerMenuResId(), getDrawerListener(), getDrawerHeaderView());
     }
 
@@ -97,10 +116,9 @@ public class SimpleActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     //Fab
-    public void initFab(boolean fabEnabled, Drawable fabDrawable, int fabColor, View.OnClickListener fabListener) {
+    public void initFab(boolean fabEnabled, Drawable fabDrawable, View.OnClickListener fabListener) {
         this.fabEnabled = fabEnabled;
         this.fabDrawable = fabDrawable;
-        this.fabColor = fabColor;
         this.fabListener = fabListener;
 
         if (isFabEnabled()) {
@@ -110,9 +128,6 @@ public class SimpleActivity extends AppCompatActivity implements View.OnClickLis
         }
         if (getFabDrawable() != null) {
             getFloatingActionButton().setImageDrawable(getFabDrawable());
-        }
-        if (getFabColor() != DEFAULT_FAB_COLOR) {
-            getFloatingActionButton().setBackgroundTintList(ColorStateList.valueOf(getFabColor()));
         }
         if (getFabListener() != null) {
             getFloatingActionButton().setOnClickListener(getFabListener());
@@ -125,7 +140,7 @@ public class SimpleActivity extends AppCompatActivity implements View.OnClickLis
 
     public void setFabEnabled(boolean fabEnabled) {
         this.fabEnabled = fabEnabled;
-        initFab(isFabEnabled(), getFabDrawable(), getFabColor(), getFabListener());
+        initFab(isFabEnabled(), getFabDrawable(), getFabListener());
     }
 
     public Drawable getFabDrawable() {
@@ -134,16 +149,7 @@ public class SimpleActivity extends AppCompatActivity implements View.OnClickLis
 
     public void setFabDrawable(Drawable fabDrawable) {
         this.fabDrawable = fabDrawable;
-        initFab(isFabEnabled(), getFabDrawable(), getFabColor(), getFabListener());
-    }
-
-    public int getFabColor() {
-        return fabColor;
-    }
-
-    public void setFabColor(int fabColor) {
-        this.fabColor = fabColor;
-        initFab(isFabEnabled(), getFabDrawable(), getFabColor(), getFabListener());
+        initFab(isFabEnabled(), getFabDrawable(), getFabListener());
     }
 
     public View.OnClickListener getFabListener() {
@@ -152,7 +158,7 @@ public class SimpleActivity extends AppCompatActivity implements View.OnClickLis
 
     public void setFabListener(View.OnClickListener fabListener) {
         this.fabListener = fabListener;
-        initFab(isFabEnabled(), getFabDrawable(), getFabColor(), getFabListener());
+        initFab(isFabEnabled(), getFabDrawable(), getFabListener());
     }
 
     public FloatingActionButton getFloatingActionButton() {
@@ -160,9 +166,8 @@ public class SimpleActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     //Toolbar
-    public void initToolbar(boolean toolbarEnabled, int toolbarColor) {
+    public void initToolbar(boolean toolbarEnabled) {
         this.toolbarEnabled = toolbarEnabled;
-        this.toolbarColor = toolbarColor;
 
         if (isToolbarEnabled()) {
             getToolbar().setVisibility(View.VISIBLE);
@@ -175,9 +180,6 @@ public class SimpleActivity extends AppCompatActivity implements View.OnClickLis
         } else {
             getToolbar().setVisibility(View.GONE);
         }
-        if (getToolbarColor() != DEFAULT_TOOLBAR_COLOR) {
-            getAppBarLayout().setBackgroundColor(getToolbarColor());
-        }
     }
 
     public boolean isToolbarEnabled() {
@@ -186,16 +188,7 @@ public class SimpleActivity extends AppCompatActivity implements View.OnClickLis
 
     public void setToolbarEnabled(boolean toolbarEnabled) {
         this.toolbarEnabled = toolbarEnabled;
-        initToolbar(isToolbarEnabled(), getToolbarColor());
-    }
-
-    public int getToolbarColor() {
-        return toolbarColor;
-    }
-
-    public void setToolbarColor(int toolbarColor) {
-        this.toolbarColor = toolbarColor;
-        initToolbar(isToolbarEnabled(), getToolbarColor());
+        initToolbar(isToolbarEnabled());
     }
 
     public Toolbar getToolbar() {
@@ -325,6 +318,19 @@ public class SimpleActivity extends AppCompatActivity implements View.OnClickLis
             mainLayout.removeAllViews();
         }
         mainLayout.addView(view, layoutParams);
+    }
+
+    //Theming methods
+    public String getThemeKey() {
+        if (themeKey != null) {
+            return themeKey;
+        } else {
+            return default_theme_key;
+        }
+    }
+
+    public Config getThemeConfig() {
+        return ATE.config(this, getThemeKey());
     }
 
     @Override

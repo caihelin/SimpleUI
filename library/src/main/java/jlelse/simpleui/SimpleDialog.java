@@ -18,7 +18,10 @@ package jlelse.simpleui;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.support.v7.app.AlertDialog;
+import android.support.annotation.NonNull;
+
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 
 public class SimpleDialog {
 
@@ -29,33 +32,40 @@ public class SimpleDialog {
     }
 
     public void SimpleAlertDialog(String title, String message) {
-        new AlertDialog.Builder(context)
-                .setTitle(title)
-                .setMessage(message)
+        new MaterialDialog.Builder(context)
+                .title(title)
+                .content(message)
                 .show();
     }
 
     public void SimpleOKDialog(String title, String message) {
-        new AlertDialog.Builder(context)
-                .setTitle(title)
-                .setMessage(message)
-                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                })
+        new MaterialDialog.Builder(context)
+                .title(title)
+                .content(message)
+                .positiveText(android.R.string.ok)
                 .show();
     }
 
-    public void SimpleYesNoDialog(String title, String message, boolean cancelable, DialogInterface.OnClickListener positiveOnClickListener, DialogInterface.OnClickListener negativeOnClickListener, DialogInterface.OnCancelListener cancelListener) {
-        new AlertDialog.Builder(context)
-                .setTitle(title)
-                .setMessage(message)
-                .setPositiveButton(android.R.string.yes, positiveOnClickListener)
-                .setNegativeButton(android.R.string.no, negativeOnClickListener)
-                .setCancelable(cancelable)
-                .setOnCancelListener(cancelListener)
+    public void SimpleYesNoDialog(String title, String message, boolean cancelable, final DialogInterface.OnClickListener positiveOnClickListener, final DialogInterface.OnClickListener negativeOnClickListener, DialogInterface.OnCancelListener cancelListener) {
+        new MaterialDialog.Builder(context)
+                .title(title)
+                .content(message)
+                .positiveText(android.R.string.yes)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        positiveOnClickListener.onClick(dialog, which.ordinal());
+                    }
+                })
+                .negativeText(android.R.string.no)
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        negativeOnClickListener.onClick(dialog, which.ordinal());
+                    }
+                })
+                .cancelable(cancelable)
+                .cancelListener(cancelListener)
                 .show();
     }
 }

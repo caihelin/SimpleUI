@@ -18,7 +18,6 @@
 
     <style name="SimpleTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/SimpleColorPrimary</item>
-        <item name="colorPrimaryDark">@color/SimpleColorPrimaryDark</item>
         <item name="colorAccent">@color/SimpleColorAccent</item>
     </style>
 

@@ -51,7 +51,6 @@ You can use the library this way:
 ```java
 // FAB
         // This way ...
-        setFabColor(ContextCompat.getColor(this, R.color.SimpleColorAccent));
         setFabDrawable(ContextCompat.getDrawable(this, R.mipmap.ic_launcher));
         setFabListener(new View.OnClickListener() {
             @Override
@@ -61,7 +60,7 @@ You can use the library this way:
         });
         setFabEnabled(true);
         // ... or this
-        initFab(true, ContextCompat.getDrawable(this, R.mipmap.ic_launcher), ContextCompat.getColor(this, R.color.SimpleColorAccent), new View.OnClickListener() {
+        initFab(true, ContextCompat.getDrawable(this, R.mipmap.ic_launcher), new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setDrawerEnabled(!isDrawerEnabled());
@@ -70,10 +69,9 @@ You can use the library this way:
 
         // Toolbar
         // This way ...
-        setToolbarColor(ContextCompat.getColor(this, R.color.SimpleColorPrimary));
         setToolbarEnabled(true);
         // ... or this
-        initToolbar(true, ContextCompat.getColor(this, R.color.SimpleColorPrimary));
+        initToolbar(true);
 
         // Drawer
         // This way ...
@@ -99,6 +97,10 @@ You can use the library this way:
                 return true;
             }
         }, headerView);
+		
+		//To make use of the App Theme Engine use:
+		getThemeKey(); //(String) for advanced usage of App Theme Engine
+		getThemeConfig(); //(Config) for advanced usage of App Theme Engine
 ```
 
 For more information and a sample look at the sample module provided in this repository.
@@ -111,14 +113,13 @@ There is also a `SimpleDialogs` class with some useful methods to use alert dial
 
 SimpleUI has the following Gradle dependencies:
 
-```
-compile 'com.android.support:appcompat-v7:23.1.1'
-compile 'com.android.support:design:23.1.1'
-```
+AppCompat
+Design Support Library
+[App Theme Engine](https://github.com/afollestad/app-theme-engine)
 
 ## Credits
 
-**Developer:** <a href="https://github.com/jlelse">jlelse</a>
+**Developer:** [jlelse](https://github.com/jlelse)
 
 ## License
 
