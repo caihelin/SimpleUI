@@ -38,7 +38,6 @@ public class SampleActivity extends SimpleActivity {
 
         // FAB
         // This way ...
-        setFabColor(ContextCompat.getColor(this, R.color.SimpleColorAccent));
         setFabDrawable(ContextCompat.getDrawable(this, R.mipmap.ic_launcher));
         setFabListener(new View.OnClickListener() {
             @Override
@@ -48,7 +47,7 @@ public class SampleActivity extends SimpleActivity {
         });
         setFabEnabled(true);
         // ... or this
-        initFab(true, ContextCompat.getDrawable(this, R.mipmap.ic_launcher), ContextCompat.getColor(this, R.color.SimpleColorAccent), new View.OnClickListener() {
+        initFab(true, ContextCompat.getDrawable(this, R.mipmap.ic_launcher), new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setDrawerEnabled(!isDrawerEnabled());
@@ -57,10 +56,9 @@ public class SampleActivity extends SimpleActivity {
 
         // Toolbar
         // This way ...
-        setToolbarColor(ContextCompat.getColor(this, R.color.SimpleColorPrimary));
         setToolbarEnabled(true);
         // ... or this
-        initToolbar(true, ContextCompat.getColor(this, R.color.SimpleColorPrimary));
+        initToolbar(true);
 
         // Drawer
         // This way ...
