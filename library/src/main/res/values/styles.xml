@@ -18,12 +18,14 @@
 
     <style name="SimpleTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/SimpleColorPrimary</item>
+        <item name="colorPrimaryDark">@color/SimpleColorPrimaryDark</item>
         <item name="colorAccent">@color/SimpleColorAccent</item>
     </style>
 
-    <style name="SimpleTheme.Default">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+    <style name="SimpleTheme.Default" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/SimpleColorPrimary</item>
+        <item name="colorPrimaryDark">@color/SimpleColorPrimaryDark</item>
+        <item name="colorAccent">@color/SimpleColorAccent</item>
     </style>
 
     <style name="SimpleTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

@@ -16,9 +16,10 @@
 
 <resources>
 
-    <style name="SimpleTheme.Default">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+    <style name="SimpleTheme.Default" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/SimpleColorPrimary</item>
+        <item name="colorPrimaryDark">@color/SimpleColorPrimaryDark</item>
+        <item name="colorAccent">@color/SimpleColorAccent</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
     </style>
 

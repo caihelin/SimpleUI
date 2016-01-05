@@ -26,7 +26,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -64,18 +63,14 @@ public class SimpleActivity extends ATEActivity implements View.OnClickListener 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (!getThemeConfig().isConfigured()) {
-            int primaryColor, accentColor;
-            TypedValue typedValue = new TypedValue();
-            getTheme().resolveAttribute(R.attr.colorPrimary, typedValue, true);
-            primaryColor = typedValue.data;
-            typedValue = new TypedValue();
-            getTheme().resolveAttribute(R.attr.colorAccent, typedValue, true);
-            accentColor = typedValue.data;
             ATE.config(this, getThemeKey())
-                    .primaryColor(primaryColor)
-                    .accentColor(accentColor)
+                    .activityTheme(R.style.SimpleTheme_Default)
+                    .primaryColorRes(R.color.SimpleColorPrimary)
+                    .primaryColorDarkRes(R.color.SimpleColorPrimaryDark)
+                    .accentColorRes(R.color.SimpleColorAccent)
                     .autoGeneratePrimaryDark(true)
-					.coloredStatusBar(true)
+                    .coloredStatusBar(true)
+                    .coloredNavigationBar(false)
                     .usingMaterialDialogs(true)
                     .commit();
         }
@@ -332,6 +327,33 @@ public class SimpleActivity extends ATEActivity implements View.OnClickListener 
 
     public Config getThemeConfig() {
         return ATE.config(this, getThemeKey());
+    }
+
+    public int getPrimaryColor() {
+        return Config.primaryColor(this, getThemeKey());
+    }
+
+    public void setPrimaryColor(int color) {
+        getThemeConfig().primaryColor(color).commit();
+        recreate();
+    }
+
+    public int getPrimaryColorDark() {
+        return Config.primaryColorDark(this, getThemeKey());
+    }
+
+    public void setPrimaryColorDark(int color) {
+        getThemeConfig().primaryColorDark(color).commit();
+        recreate();
+    }
+
+    public int getAccentColor() {
+        return Config.accentColor(this, getThemeKey());
+    }
+
+    public void setAccentColor(int color) {
+        getThemeConfig().accentColor(color).commit();
+        recreate();
     }
 
     @Override
