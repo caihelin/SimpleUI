@@ -95,5 +95,8 @@ public class SampleActivity extends SimpleActivity {
             sampleTV.setText(R.string.app_name);
             content.addView(sampleTV);
         }
+        TextView sampleTV = new TextView(this);
+        sampleTV.setText("Last item");
+        content.addView(sampleTV);
     }
 }
