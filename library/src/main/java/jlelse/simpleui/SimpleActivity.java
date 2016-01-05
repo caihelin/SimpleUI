@@ -73,8 +73,9 @@ public class SimpleActivity extends ATEActivity implements View.OnClickListener 
             accentColor = typedValue.data;
             ATE.config(this, getThemeKey())
                     .primaryColor(primaryColor)
-                    .autoGeneratePrimaryDark(true)
                     .accentColor(accentColor)
+                    .autoGeneratePrimaryDark(true)
+					.coloredStatusBar(true)
                     .usingMaterialDialogs(true)
                     .commit();
         }

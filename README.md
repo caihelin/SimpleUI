@@ -32,7 +32,7 @@ and this to your module `build.gradle`:
 ```
  dependencies {
         ...
-        compile 'com.github.jlelse:SimpleUI:0.5'
+        compile 'com.github.jlelse:SimpleUI:0.6.1'
     }
 ```
 
