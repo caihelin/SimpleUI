@@ -18,6 +18,7 @@ package jlelse.simpleui;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -55,15 +56,18 @@ public class SimpleActivity extends ATEActivity implements View.OnClickListener 
     private View drawerHeaderView;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
-    //Theming
-    private String themeKey;
     //Other
     private RelativeLayout mainLayout;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected String getATEKey() {
+        return default_theme_key;
+    }
+
+    public void configTheme() {
         if (!getThemeConfig().isConfigured()) {
-            ATE.config(this, getThemeKey())
+            ATE.config(this, getATEKey())
                     .activityTheme(R.style.SimpleTheme_Default)
                     .primaryColorRes(R.color.SimpleColorPrimary)
                     .primaryColorDarkRes(R.color.SimpleColorPrimaryDark)
@@ -74,6 +78,11 @@ public class SimpleActivity extends ATEActivity implements View.OnClickListener 
                     .usingMaterialDialogs(true)
                     .commit();
         }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        configTheme();
 
         super.onCreate(savedInstanceState);
 
@@ -317,20 +326,12 @@ public class SimpleActivity extends ATEActivity implements View.OnClickListener 
     }
 
     //Theming methods
-    public String getThemeKey() {
-        if (themeKey != null) {
-            return themeKey;
-        } else {
-            return default_theme_key;
-        }
-    }
-
     public Config getThemeConfig() {
-        return ATE.config(this, getThemeKey());
+        return ATE.config(this, getATEKey());
     }
 
     public int getPrimaryColor() {
-        return Config.primaryColor(this, getThemeKey());
+        return Config.primaryColor(this, getATEKey());
     }
 
     public void setPrimaryColor(int color) {
@@ -339,7 +340,7 @@ public class SimpleActivity extends ATEActivity implements View.OnClickListener 
     }
 
     public int getPrimaryColorDark() {
-        return Config.primaryColorDark(this, getThemeKey());
+        return Config.primaryColorDark(this, getATEKey());
     }
 
     public void setPrimaryColorDark(int color) {
@@ -348,7 +349,7 @@ public class SimpleActivity extends ATEActivity implements View.OnClickListener 
     }
 
     public int getAccentColor() {
-        return Config.accentColor(this, getThemeKey());
+        return Config.accentColor(this, getATEKey());
     }
 
     public void setAccentColor(int color) {

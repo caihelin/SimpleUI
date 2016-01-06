@@ -20,12 +20,14 @@
         <item name="colorPrimary">@color/SimpleColorPrimary</item>
         <item name="colorPrimaryDark">@color/SimpleColorPrimaryDark</item>
         <item name="colorAccent">@color/SimpleColorAccent</item>
+        <item name="ate_key">default</item>
     </style>
 
     <style name="SimpleTheme.Default" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/SimpleColorPrimary</item>
         <item name="colorPrimaryDark">@color/SimpleColorPrimaryDark</item>
         <item name="colorAccent">@color/SimpleColorAccent</item>
+        <item name="ate_key">default</item>
     </style>
 
     <style name="SimpleTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

@@ -43,7 +43,7 @@ android {
 dependencies {
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
-    compile('com.github.afollestad:app-theme-engine:-SNAPSHOT@aar') {
+    compile('com.github.afollestad:app-theme-engine:0.7.0@aar') {
         transitive = true
     }
 }
