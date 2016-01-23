@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.app.AlertDialog;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,9 +29,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import jlelse.simpleui.SimpleActivity;
-import jlelse.simpleui.SimpleDialog;
 
 public class SampleActivity extends SimpleActivity {
+
+    @Override
+    public int themeVersion() {
+        return 1;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +71,10 @@ public class SampleActivity extends SimpleActivity {
         setDrawerListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
-                new SimpleDialog(SampleActivity.this).SimpleOKDialog("Test", "Hey!");
+                new AlertDialog.Builder(SampleActivity.this)
+                        .setTitle("Test")
+                        .setMessage("Hey!")
+                        .show();
                 getDrawerLayout().closeDrawers();
                 return true;
             }
@@ -79,7 +87,10 @@ public class SampleActivity extends SimpleActivity {
         initDrawer(true, R.menu.drawer, new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
-                new SimpleDialog(SampleActivity.this).SimpleOKDialog("Test", "Hey!");
+                new AlertDialog.Builder(SampleActivity.this)
+                        .setTitle("Test")
+                        .setMessage("Hey!")
+                        .show();
                 getDrawerLayout().closeDrawers();
                 return true;
             }

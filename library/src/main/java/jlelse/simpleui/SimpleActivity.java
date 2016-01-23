@@ -35,7 +35,7 @@ import com.afollestad.appthemeengine.ATE;
 import com.afollestad.appthemeengine.ATEActivity;
 import com.afollestad.appthemeengine.Config;
 
-public class SimpleActivity extends ATEActivity implements View.OnClickListener {
+public abstract class SimpleActivity extends ATEActivity {
 
     public static String default_theme_key = "default";
 
@@ -65,8 +65,10 @@ public class SimpleActivity extends ATEActivity implements View.OnClickListener 
         return default_theme_key;
     }
 
+    public abstract int themeVersion();
+
     public void configTheme() {
-        if (!getThemeConfig().isConfigured()) {
+        if (!getThemeConfig().isConfigured(themeVersion())) {
             ATE.config(this, getATEKey())
                     .activityTheme(R.style.SimpleTheme_Default)
                     .primaryColorRes(R.color.SimpleColorPrimary)
@@ -75,6 +77,7 @@ public class SimpleActivity extends ATEActivity implements View.OnClickListener 
                     .autoGeneratePrimaryDark(true)
                     .coloredStatusBar(true)
                     .coloredNavigationBar(false)
+                    .navigationViewThemed(true)
                     .usingMaterialDialogs(true)
                     .commit();
         }
@@ -110,14 +113,6 @@ public class SimpleActivity extends ATEActivity implements View.OnClickListener 
         initFab(isFabEnabled(), getFabDrawable(), getFabListener());
         initToolbar(isToolbarEnabled());
         initDrawer(isDrawerEnabled(), getDrawerMenuResId(), getDrawerListener(), getDrawerHeaderView());
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            default:
-                break;
-        }
     }
 
     //Fab

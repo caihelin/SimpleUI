@@ -3,7 +3,7 @@
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-SimpleUI-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/2677)
 [![Platform](https://img.shields.io/badge/platform-android-green.svg)](http://developer.android.com/index.html)
 [![API](https://img.shields.io/badge/API-15%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=15)
-[![Release](https://img.shields.io/github/release/jlelse/SimpleUI.svg?label=JitPack)](https://jitpack.io/#jlelse/SimpleUI)
+[![Release](https://jitpack.io/v/jlelse/SimpleUI.svg)](https://jitpack.io/#jlelse/SimpleUI)
 [![License](https://img.shields.io/github/license/jlelse/SimpleUI.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 
 ## What is SimpleUI?
@@ -32,7 +32,7 @@ and this to your module `build.gradle`:
 ```
  dependencies {
         ...
-        compile 'com.github.jlelse:SimpleUI:0.6.1'
+        compile 'com.github.jlelse:SimpleUI:0.7'
     }
 ```
 
@@ -108,10 +108,6 @@ You can use the library this way:
 ```
 
 For more information and a sample look at the sample module provided in this repository.
-
-## Advanced features
-
-There is also a `SimpleDialogs` class with some useful methods to use alert dialogs more simple.
 
 ## Dependencies
 
