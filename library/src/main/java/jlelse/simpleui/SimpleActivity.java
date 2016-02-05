@@ -20,6 +20,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -58,6 +59,7 @@ public abstract class SimpleActivity extends ATEActivity {
     private DrawerLayout drawerLayout;
     //Other
     private RelativeLayout mainLayout;
+    private CoordinatorLayout coordinatorLayout;
 
     @Nullable
     @Override
@@ -255,8 +257,6 @@ public abstract class SimpleActivity extends ATEActivity {
                 actionBar.setHomeButtonEnabled(false);
             }
         }
-
-
     }
 
     public boolean isDrawerEnabled() {
@@ -301,6 +301,10 @@ public abstract class SimpleActivity extends ATEActivity {
 
     public DrawerLayout getDrawerLayout() {
         return drawerLayout;
+    }
+
+    public CoordinatorLayout getCoordinatorLayout() {
+        return (CoordinatorLayout) findViewById(R.id.coordinator);
     }
 
     // Content

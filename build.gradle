@@ -14,15 +14,12 @@
  *    limitations under the License.
  */
 
-apply plugin: 'com.github.ben-manes.versions'
-
 buildscript {
     repositories {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.0.0-alpha6'
-        classpath 'com.github.ben-manes:gradle-versions-plugin:0.11.3'
+        classpath 'com.android.tools.build:gradle:2.0.0-beta2'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.3'
     }
 }
