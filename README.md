@@ -4,7 +4,6 @@
 [![Platform](https://img.shields.io/badge/platform-android-green.svg)](http://developer.android.com/index.html)
 [![API](https://img.shields.io/badge/API-15%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=15)
 [![Release](https://jitpack.io/v/jlelse/SimpleUI.svg)](https://jitpack.io/#jlelse/SimpleUI)
-[![License](https://img.shields.io/github/license/jlelse/SimpleUI.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 
 ## What is SimpleUI?
 
