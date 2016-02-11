@@ -16,6 +16,7 @@
 
 package jlelse.simpleui;
 
+import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -28,6 +29,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -37,8 +39,6 @@ import com.afollestad.appthemeengine.ATEActivity;
 import com.afollestad.appthemeengine.Config;
 
 public abstract class SimpleActivity extends ATEActivity {
-
-    public static String default_theme_key = "default";
 
     public static int NO_DRAWER_MENU = 111111;
     //Fab
@@ -63,8 +63,8 @@ public abstract class SimpleActivity extends ATEActivity {
 
     @Nullable
     @Override
-    protected String getATEKey() {
-        return default_theme_key;
+    public String getATEKey() {
+        return super.getATEKey();
     }
 
     public abstract int themeVersion();
@@ -80,7 +80,6 @@ public abstract class SimpleActivity extends ATEActivity {
                     .coloredStatusBar(true)
                     .coloredNavigationBar(false)
                     .navigationViewThemed(true)
-                    .usingMaterialDialogs(true)
                     .commit();
         }
     }
@@ -305,6 +304,21 @@ public abstract class SimpleActivity extends ATEActivity {
 
     public CoordinatorLayout getCoordinatorLayout() {
         return (CoordinatorLayout) findViewById(R.id.coordinator);
+    }
+
+    public void disableToolbarHiding() {
+        TypedValue typedValue = new TypedValue();
+        getTheme().resolveAttribute(R.attr.actionBarSize, typedValue, true);
+        TypedArray a = obtainStyledAttributes(typedValue.data, new int[]{R.attr.actionBarSize});
+        int actionBarSize = a.getDimensionPixelSize(0, -1);
+        a.recycle();
+
+        CoordinatorLayout.LayoutParams coordinatorLayoutParams = (CoordinatorLayout.LayoutParams) mainLayout.getLayoutParams();
+        coordinatorLayoutParams.setBehavior(null);
+        coordinatorLayoutParams.setMargins(0, actionBarSize, 0, 0);
+
+        AppBarLayout.LayoutParams toolbarLayoutParams = (AppBarLayout.LayoutParams) getToolbar().getLayoutParams();
+        toolbarLayoutParams.setScrollFlags(0);
     }
 
     // Content

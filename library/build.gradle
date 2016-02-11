@@ -27,7 +27,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 1
-        versionName "0.7.1"
+        versionName "0.8"
     }
     buildTypes {
         release {
@@ -43,5 +43,5 @@ android {
 dependencies {
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
-    compile 'com.github.afollestad:app-theme-engine:0.7.7'
+    compile 'com.github.afollestad:app-theme-engine:1.0.0'
 }
