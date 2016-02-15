@@ -43,5 +43,5 @@ android {
 dependencies {
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
-    compile 'com.github.afollestad:app-theme-engine:-1.0.0-g0d27df3-7'
+    compile 'com.github.afollestad:app-theme-engine:-SNAPSHOT'
 }
