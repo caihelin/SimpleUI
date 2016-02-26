@@ -16,8 +16,6 @@
 
 <resources>
 
-    <style name="BaseTheme" parent="SimpleTheme" />
-
     <style name="DefaultTheme" parent="SimpleTheme.Default" />
 
 </resources>

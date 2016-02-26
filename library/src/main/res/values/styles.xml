@@ -16,14 +16,7 @@
 
 <resources>
 
-    <style name="SimpleTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/SimpleColorPrimary</item>
-        <item name="colorPrimaryDark">@color/SimpleColorPrimaryDark</item>
-        <item name="colorAccent">@color/SimpleColorAccent</item>
-        <item name="ate_key">default</item>
-    </style>
-
-    <style name="SimpleTheme.Default" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="SimpleTheme.Default" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="colorPrimary">@color/SimpleColorPrimary</item>
         <item name="colorPrimaryDark">@color/SimpleColorPrimaryDark</item>
         <item name="colorAccent">@color/SimpleColorAccent</item>
